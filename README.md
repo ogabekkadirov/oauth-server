@@ -1,6 +1,7 @@
 Clone project
 
 ```git clone https://github.com/ogabekkadirov/oauth-server.git```
+
 Make .env file
 ```cp deploy/example-env.env deploy/.env``` or ```make .env```
 
