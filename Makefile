@@ -5,6 +5,10 @@ MIGRATION_PATH=./src/infrastructure/db/migrations
 PROTOS_PATH=./src/infrastructure/protos
 PROTO_DIRS={proto file dir name}
 
+
+.env:
+	copy deploy\example-env.env deploy\.env
+
 server:
 	go run main.go
 
@@ -27,7 +31,7 @@ clear:
 	rm -rf ./src/application/protos/*
 
 compose-up:
-	docker-compose -f ./deploy/docker-compose.yml up
+	docker-compose -f ./deploy/docker-compose.yml up -d
 
 compose-down:
 	docker-compose -f ./deploy/docker-compose.yml down
