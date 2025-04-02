@@ -1,0 +1,20 @@
+# VCS
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cache / Build
+bin/
+dist/
+vendor/
+
+# Test data
+tests/
+tmp/

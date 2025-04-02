@@ -1,0 +1,39 @@
+# Barcha kompilyatsiya qilingan binar fayllarni e'tiborsiz qoldirish
+*.exe
+*.dll
+*.so
+*.dylib
+*.out
+*.o
+
+# Go build cache va mod fayllar
+/bin/
+/obj/
+/pkg/
+go.sum
+
+# GoLand va VSCode konfig fayllari
+.idea/
+.vscode/
+
+# Log va kesh fayllar
+*.log
+*.cache
+*.tmp
+
+# Docker build qilingan fayllar
+docker-compose.override.yml
+.env
+
+# Database migratsiyalar
+migrations/*.sql-journal
+migrations/*.log
+
+# Secrets va tokenlar
+.env.local
+.env.production
+config/*.local.yaml
+config/*.secret.json
+
+storage/
+*.pem
