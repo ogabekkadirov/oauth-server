@@ -4,7 +4,9 @@ Clone project
 
 Make .env file
 ```cp deploy/example-env.env deploy/.env``` or ```make .env```
+
 ```go mod init github.com/ogabekkadirov/oauth-server```
+
 ```go mod tidy```
 
 Run project
