@@ -11,6 +11,7 @@
 /obj/
 /pkg/
 go.sum
+go.mod
 # GoLand va VSCode konfig fayllari
 .idea/
 .vscode/
