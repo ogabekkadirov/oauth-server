@@ -1,6 +1,6 @@
 package repositories
 
-import "gitlab.com/yammt/oauth-auth-service/src/domain/auth/models"
+import "github.com/ogabekkadirov/oauth-server/src/domain/auth/models"
 
 type TokenRepository interface {
 	StoreAccessToken(token *models.Token, userID string) error

@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"gitlab.com/yammt/oauth-auth-service/src/Infrastructure/response"
-	"gitlab.com/yammt/oauth-auth-service/src/domain/auth/services"
+	"github.com/ogabekkadirov/oauth-server/src/Infrastructure/response"
+	"github.com/ogabekkadirov/oauth-server/src/domain/auth/services"
 )
 
 type routes struct {

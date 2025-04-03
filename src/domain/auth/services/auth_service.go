@@ -3,10 +3,10 @@ package services
 import (
 	"errors"
 
-	"gitlab.com/yammt/oauth-auth-service/src/Infrastructure/helpers"
-	"gitlab.com/yammt/oauth-auth-service/src/Infrastructure/jwt"
-	"gitlab.com/yammt/oauth-auth-service/src/domain/auth/models"
-	"gitlab.com/yammt/oauth-auth-service/src/domain/auth/repositories"
+	"github.com/ogabekkadirov/oauth-server/src/Infrastructure/helpers"
+	"github.com/ogabekkadirov/oauth-server/src/Infrastructure/jwt"
+	"github.com/ogabekkadirov/oauth-server/src/domain/auth/models"
+	"github.com/ogabekkadirov/oauth-server/src/domain/auth/repositories"
 )
 
 const (

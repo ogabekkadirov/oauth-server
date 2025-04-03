@@ -7,8 +7,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"gitlab.com/yammt/oauth-auth-service/src/Infrastructure/helpers"
-	"gitlab.com/yammt/oauth-auth-service/src/domain/auth/models"
+	"github.com/ogabekkadirov/oauth-server/src/Infrastructure/helpers"
+	"github.com/ogabekkadirov/oauth-server/src/domain/auth/models"
 )
 
 type MyStruct struct {

@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"gitlab.com/yammt/oauth-auth-service/src/domain/auth/models"
+	"github.com/ogabekkadirov/oauth-server/src/domain/auth/models"
 )
 
 func SeedClients(db *pgxpool.Pool) error {

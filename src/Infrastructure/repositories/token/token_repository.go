@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
+	"github.com/ogabekkadirov/oauth-server/src/domain/auth/models"
+	"github.com/ogabekkadirov/oauth-server/src/domain/auth/repositories"
 	redis "github.com/redis/go-redis/v9"
-	"gitlab.com/yammt/oauth-auth-service/src/domain/auth/models"
-	"gitlab.com/yammt/oauth-auth-service/src/domain/auth/repositories"
 )
 
 const (

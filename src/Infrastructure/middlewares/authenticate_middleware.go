@@ -6,11 +6,11 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"gitlab.com/yammt/oauth-auth-service/src/Infrastructure/config"
-	"gitlab.com/yammt/oauth-auth-service/src/Infrastructure/jwt"
-	"gitlab.com/yammt/oauth-auth-service/src/Infrastructure/response"
-	"gitlab.com/yammt/oauth-auth-service/src/Infrastructure/utils/cerror"
-	"gitlab.com/yammt/oauth-auth-service/src/domain/auth/models"
+	"github.com/ogabekkadirov/oauth-server/src/Infrastructure/config"
+	"github.com/ogabekkadirov/oauth-server/src/Infrastructure/jwt"
+	"github.com/ogabekkadirov/oauth-server/src/Infrastructure/response"
+	"github.com/ogabekkadirov/oauth-server/src/Infrastructure/utils/cerror"
+	"github.com/ogabekkadirov/oauth-server/src/domain/auth/models"
 )
 
 func AuthenticateMiddleware() gin.HandlerFunc {

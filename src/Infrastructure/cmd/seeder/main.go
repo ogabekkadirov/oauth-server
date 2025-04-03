@@ -1,6 +1,6 @@
 package main
 
-import "gitlab.com/yammt/oauth-auth-service/src/Infrastructure/db/seeder"
+import "github.com/ogabekkadirov/oauth-server/src/Infrastructure/db/seeder"
 
 func main() {
 	seeder.RunSeeder()

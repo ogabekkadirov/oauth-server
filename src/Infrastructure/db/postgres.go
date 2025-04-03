@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"gitlab.com/yammt/oauth-auth-service/src/Infrastructure/config"
+	"github.com/ogabekkadirov/oauth-server/src/Infrastructure/config"
 )
 
 func NewPostgresPool() *pgxpool.Pool {

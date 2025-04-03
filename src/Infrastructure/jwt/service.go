@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	"gitlab.com/yammt/oauth-auth-service/src/Infrastructure/config"
-	"gitlab.com/yammt/oauth-auth-service/src/domain/auth/models"
+	"github.com/ogabekkadirov/oauth-server/src/Infrastructure/config"
+	"github.com/ogabekkadirov/oauth-server/src/domain/auth/models"
 )
 var (
     privateKey *rsa.PrivateKey

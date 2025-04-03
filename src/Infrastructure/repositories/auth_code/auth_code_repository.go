@@ -5,8 +5,8 @@ import (
 	"errors"
 	"time"
 
+	"github.com/ogabekkadirov/oauth-server/src/domain/auth/repositories"
 	redis "github.com/redis/go-redis/v9"
-	"gitlab.com/yammt/oauth-auth-service/src/domain/auth/repositories"
 )
 
 type authCodeRepoImpl struct {

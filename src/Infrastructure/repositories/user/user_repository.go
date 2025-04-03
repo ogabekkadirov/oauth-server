@@ -5,9 +5,9 @@ import (
 	"errors"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"gitlab.com/yammt/oauth-auth-service/src/Infrastructure/crypto"
-	"gitlab.com/yammt/oauth-auth-service/src/domain/auth/models"
-	"gitlab.com/yammt/oauth-auth-service/src/domain/auth/repositories"
+	"github.com/ogabekkadirov/oauth-server/src/Infrastructure/crypto"
+	"github.com/ogabekkadirov/oauth-server/src/domain/auth/models"
+	"github.com/ogabekkadirov/oauth-server/src/domain/auth/repositories"
 )
 
 const (

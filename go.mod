@@ -1,4 +1,4 @@
-module gitlab.com/yammt/oauth-auth-service
+module github.com/ogabekkadirov/oauth-server
 
 go 1.23.4
 

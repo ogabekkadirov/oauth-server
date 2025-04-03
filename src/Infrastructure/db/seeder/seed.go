@@ -1,6 +1,6 @@
 package seeder
 
-import "gitlab.com/yammt/oauth-auth-service/src/Infrastructure/db"
+import "github.com/ogabekkadirov/oauth-server/src/Infrastructure/db"
 
 func RunSeeder() {
 	pool := db.NewPostgresPool()

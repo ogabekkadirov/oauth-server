@@ -5,11 +5,11 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"gitlab.com/yammt/oauth-auth-service/src/Infrastructure/middlewares"
-	"gitlab.com/yammt/oauth-auth-service/src/Infrastructure/response"
-	"gitlab.com/yammt/oauth-auth-service/src/Infrastructure/utils/cerror"
-	"gitlab.com/yammt/oauth-auth-service/src/domain/auth/models"
-	"gitlab.com/yammt/oauth-auth-service/src/domain/auth/services"
+	"github.com/ogabekkadirov/oauth-server/src/Infrastructure/middlewares"
+	"github.com/ogabekkadirov/oauth-server/src/Infrastructure/response"
+	"github.com/ogabekkadirov/oauth-server/src/Infrastructure/utils/cerror"
+	"github.com/ogabekkadirov/oauth-server/src/domain/auth/models"
+	"github.com/ogabekkadirov/oauth-server/src/domain/auth/services"
 )
 
 
