@@ -10,7 +10,8 @@ import (
 )
 
 const (
-// userTable = "token"
+	ttl_access = time.Hour
+	ttl_refresh = time.Hour * 24 * 7
 )
 
 type tokenRepoImpl struct {
@@ -23,12 +24,12 @@ func NewTokenRepository(rdb *redis.Client) repositories.TokenRepository {
 
 func (s *tokenRepoImpl) StoreAccessToken(token *models.Token, userID string) error {
 	ctx := context.Background()
-	return s.rdb.Set(ctx, "access:"+token.AccessToken, userID, time.Hour).Err()
+	return s.rdb.Set(ctx, "access:"+token.AccessToken, userID, ttl_access).Err()
 }
 
 func (s *tokenRepoImpl) StoreRefreshToken(refreshToken, userID string) error {
 	ctx := context.Background()
-	return s.rdb.Set(ctx, "refresh:"+refreshToken, userID, time.Hour*24*7).Err()
+	return s.rdb.Set(ctx, "refresh:"+refreshToken, userID, ttl_refresh).Err()
 }
 
 func (s *tokenRepoImpl) ValidateRefreshToken(refreshToken string) (string, error) {

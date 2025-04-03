@@ -16,6 +16,12 @@ var (
     privateKey *rsa.PrivateKey
     publicKey  *rsa.PublicKey
 )
+
+const (
+	ttl_access = time.Hour
+	ttl_refresh = time.Hour * 24 * 7
+)
+
 type JwtService interface {
 	GenerateAccessToken(userID string, clientID string, scopes []string) (string, error)
 	VerifyToken(ctx context.Context, token string) (*models.TokenClaims, error)
@@ -61,7 +67,7 @@ func (j *jwtSvcImpl) GenerateAccessToken(userID string, clientID string, scopes 
         Sub: userID,
         ClientID: clientID,
         Scopes: scopes,
-        Exp: time.Now().Add(time.Hour).Unix(),
+        Exp: time.Now().Add(ttl_access).Unix(),
         Iat: time.Now().Unix(),
         Nbf: time.Now().Unix(),
         Aud: clientID,
@@ -85,7 +91,7 @@ func (j *jwtSvcImpl) GenerateAccessToken(userID string, clientID string, scopes 
 func (j *jwtSvcImpl) GenerateRefreshToken(userID string) (string, error) {
 	tokenClaims := models.TokenClaims{
         Sub: userID,
-        Exp: time.Now().Add(time.Hour*7*24).Unix(),
+        Exp: time.Now().Add(ttl_refresh).Unix(),
         Iat: time.Now().Unix(),
         Nbf: time.Now().Unix(),
         Iss: "own",

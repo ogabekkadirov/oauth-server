@@ -16,7 +16,6 @@ type AuthorizationCode struct {
 type Token struct {
 	AccessToken  string
 	RefreshToken string
-	ExpiresIn    int
 	TokenType    string
 }
 

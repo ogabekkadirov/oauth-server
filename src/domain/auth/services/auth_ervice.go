@@ -9,7 +9,12 @@ import (
 	"gitlab.com/yammt/oauth-auth-service/src/domain/auth/repositories"
 )
 
-
+const (
+	GrantTypeClientCredentials = "client_credentials"
+	GrantTypePassword          = "password"
+	GrantTypeAuthorizationCode = "authorization_code"	
+	GrantTypeRefreshToken      = "refresh_token"
+)
 
 type AuthService interface {
 	HandleClientCredentials(clientID, clientSecret string) (*models.Token, error)
@@ -49,7 +54,7 @@ func (s *authSvcImpl) HandleClientCredentials(clientID, clientSecret string) (*m
 		return nil, err
 	}
 
-	if err := helpers.ValidateClientGrant(client.GrantTypes, "client_credentials"); err != nil {
+	if err := helpers.ValidateClientGrant(client.GrantTypes, GrantTypeClientCredentials); err != nil {
 		return nil, err
 	}
 	tokenStr, err := s.jwtGen.GenerateAccessToken("", client.ID, client.Scopes)
@@ -59,7 +64,6 @@ func (s *authSvcImpl) HandleClientCredentials(clientID, clientSecret string) (*m
 	token := &models.Token{
 		AccessToken: tokenStr,
 		TokenType: "Bearer",
-		ExpiresIn: 3600,
 	}
 	s.tokenRepo.StoreAccessToken(token, "")
 	return token, nil
@@ -70,7 +74,7 @@ func (s *authSvcImpl) HandlePasswordGrant(username, password, clientID string,cl
 	if err != nil {
 		return nil, err
 	}
-	if err := helpers.ValidateClientGrant(client.GrantTypes, "password"); err != nil {
+	if err := helpers.ValidateClientGrant(client.GrantTypes, GrantTypePassword); err != nil {
 		return nil, err
 	}
 
@@ -91,7 +95,6 @@ func (s *authSvcImpl) HandlePasswordGrant(username, password, clientID string,cl
 		AccessToken: tokenStr,
 		RefreshToken: refreshToken,
 		TokenType: "Bearer",
-		ExpiresIn: 3600,
 	}
 	s.tokenRepo.StoreAccessToken(token, user.ID)
 	s.tokenRepo.StoreRefreshToken(refreshToken, user.ID)
@@ -104,7 +107,7 @@ func (s *authSvcImpl) HandleAuthorizationCodeGrant(code, clientID, redirectURI s
 	if err != nil {
 		return nil, err
 	}
-	if err := helpers.ValidateClientGrant(client.GrantTypes, "authorization_code"); err != nil {
+	if err := helpers.ValidateClientGrant(client.GrantTypes, GrantTypeAuthorizationCode); err != nil {
 		return nil, err
 	}
 
@@ -126,7 +129,6 @@ func (s *authSvcImpl) HandleAuthorizationCodeGrant(code, clientID, redirectURI s
 		AccessToken: tokenStr,
 		RefreshToken: refreshToken,
 		TokenType: "Bearer",
-		ExpiresIn: 3600,
 	}
 	s.tokenRepo.StoreAccessToken(token, userID)
 	s.tokenRepo.StoreRefreshToken(refreshToken, userID)
@@ -138,7 +140,7 @@ func (s *authSvcImpl) HandleRefreshToken(refreshToken, clientID string,clientSec
 	if err != nil {
 		return nil, err
 	}
-	if err := helpers.ValidateClientGrant(client.GrantTypes, "refresh_token"); err != nil {
+	if err := helpers.ValidateClientGrant(client.GrantTypes, GrantTypeRefreshToken); err != nil {
 		return nil, err
 	}
 
@@ -158,7 +160,6 @@ func (s *authSvcImpl) HandleRefreshToken(refreshToken, clientID string,clientSec
 		AccessToken: tokenStr,
 		RefreshToken: newRefreshToken,
 		TokenType: "Bearer",
-		ExpiresIn: 3600,
 	}
 	s.tokenRepo.StoreAccessToken(token, userID)
 	s.tokenRepo.StoreRefreshToken(newRefreshToken, userID)

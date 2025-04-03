@@ -1,13 +1,9 @@
-include .env
+include deploy/.env
 
 SERVICE={service-name}
 MIGRATION_PATH=./src/infrastructure/db/migrations
 PROTOS_PATH=./src/infrastructure/protos
 PROTO_DIRS={proto file dir name}
-
-
-.env:
-	copy deploy\example-env.env deploy\.env
 
 server:
 	go run main.go
