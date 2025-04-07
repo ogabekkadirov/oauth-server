@@ -27,7 +27,7 @@ clear:
 	rm -rf ./src/application/protos/*
 
 compose-up:
-	docker-compose -f ./deploy/docker-compose.yml up -d
+	docker-compose -f ./deploy/docker-compose.yml up -d --build
 
 compose-down:
 	docker-compose -f ./deploy/docker-compose.yml down

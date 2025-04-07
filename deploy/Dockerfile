@@ -8,7 +8,6 @@ COPY ../go.sum ./
 RUN go mod download
 
 COPY . .
-
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o app main.go
 
 FROM alpine:latest
@@ -18,7 +17,7 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 
 COPY --from=builder /app/app .
-
+COPY --from=builder /app/src/templates/ ./src/templates/
 COPY storage/keys/ ./storage/keys/
 
 

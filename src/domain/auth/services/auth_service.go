@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"time"
 
 	"github.com/ogabekkadirov/oauth-server/src/Infrastructure/helpers"
 	"github.com/ogabekkadirov/oauth-server/src/Infrastructure/jwt"
@@ -22,6 +23,8 @@ type AuthService interface {
 	HandlePasswordGrant(username, password, clientID string,clientSecret string) (*models.Token, error)
 	HandleRefreshToken(refreshToken, clientID string,clientSecret string) (*models.Token, error)
 	GetUserByID(userID string) (*models.User, error)
+	StoreAuthCode(code, userID string)(string,error)
+	ValidateUser(username, password string) (*models.User, error)
 }
 
 
@@ -169,6 +172,27 @@ func (s *authSvcImpl) HandleRefreshToken(refreshToken, clientID string,clientSec
 
 func (s *authSvcImpl) GetUserByID(userID string) (*models.User, error) {
 	user, err := s.userRepo.GetByID(userID)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
+func(s *authSvcImpl) StoreAuthCode(code, userID string) (string,error) {
+	code, err := helpers.GenerateAuthCode(32)
+    if err != nil {
+        return "",err
+    }
+
+	err = s.authCodeRepo.Save(code, userID, time.Minute*5)
+	if err != nil {
+		return "",err
+	}
+	return code,nil
+}
+
+func (s *authSvcImpl) ValidateUser(username, password string) (*models.User, error) {
+	user, err := s.userRepo.ValidateUser(username, password)
 	if err != nil {
 		return nil, err
 	}

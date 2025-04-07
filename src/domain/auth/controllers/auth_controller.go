@@ -2,7 +2,9 @@ package controllers
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
+	"net/url"
 
 	"github.com/gin-gonic/gin"
 	"github.com/ogabekkadirov/oauth-server/src/Infrastructure/middlewares"
@@ -23,6 +25,8 @@ func (r *router) initAuthController() {
 
 	r.routes.v1.POST("/oauth/token", h.handleToken)
 	r.routes.v1.GET("/me",middlewares.AuthenticateMiddleware(),h.handleMe)
+	r.routes.v1.GET("/authorize", h.Authorize)
+	r.routes.v1.POST("/login", h.Login)
 }
 func (h *authController) handleToken(ctx *gin.Context) {
 	var req models.TokenRequest
@@ -80,3 +84,76 @@ func (h *authController) handleMe(ctx *gin.Context) {
 	}
 	response.SuccessResult(ctx, http.StatusOK, user)
 }
+
+func (h *authController) Authorize(ctx *gin.Context) {
+	clientID := ctx.Query("client_id")
+    redirectURI := ctx.Query("redirect_uri")
+    scope := ctx.Query("scope")
+    state := ctx.Query("state")
+	userID, isExist := ctx.Get("AuthUserId")
+    if !isExist {
+        loginURL := fmt.Sprintf("/login?redirect_uri=%s&client_id=%s&scope=%s&state=%s",
+            url.QueryEscape(redirectURI),
+            url.QueryEscape(clientID),
+            url.QueryEscape(scope),
+            url.QueryEscape(state),
+        )
+        ctx.Redirect(http.StatusFound, loginURL)
+        return
+    }
+	h.CompleteAuthorization(ctx, clientID, userID.(string), redirectURI, scope, state)
+}
+
+func (h *authController) Login(ctx *gin.Context) {
+    username := ctx.PostForm("username")
+    password := ctx.PostForm("password")
+    redirectURI := ctx.PostForm("redirect_uri")
+    clientID := ctx.PostForm("client_id")
+    scope := ctx.PostForm("scope")
+    state := ctx.PostForm("state")
+    user, err := h.authSvc.ValidateUser(username, password)
+    if err != nil {
+		loginURL := fmt.Sprintf("/login?redirect_uri=%s&client_id=%s&scope=%s&state=%s&error=%s",
+            url.QueryEscape(redirectURI),
+            url.QueryEscape(clientID),
+            url.QueryEscape(scope),
+            url.QueryEscape(state),
+			"Invalid credentials",
+        )
+        ctx.Redirect(http.StatusFound, loginURL)
+        return
+    }
+
+
+    h.CompleteAuthorization(ctx, clientID, user.ID, redirectURI, scope, state)
+}
+
+func (h *authController) CompleteAuthorization(ctx *gin.Context, clientID, userID, redirectURI, scope, state string) {
+
+    code,err := h.authSvc.StoreAuthCode(clientID, userID)
+    if err != nil {
+		cErr := cerror.NewError(http.StatusInternalServerError, err)
+		response.ErrorResult(ctx,cErr)
+        return
+    }
+
+    callback := fmt.Sprintf("%s?code=%s&state=%s", redirectURI, code, state)
+    ctx.Redirect(http.StatusFound, callback)
+}
+// func (h *authController) handleLogout(ctx *gin.Context) {
+// 	userID, isExist := ctx.Get("AuthUserId")
+// 	if !isExist {
+// 		cErr := cerror.NewError(http.StatusUnauthorized, errors.New("Unauthorized")) 
+// 		response.ErrorResult(ctx,cErr)
+// 		return
+// 	}
+
+// 	err := h.authSvc.Logout(userID.(string))
+// 	if err != nil {
+// 		cErr := cerror.NewError(http.StatusInternalServerError, err) 
+// 		response.ErrorResult(ctx,cErr)
+// 		return
+// 	}
+// 	response.SuccessResult(ctx, http.StatusOK, nil)
+// }
+

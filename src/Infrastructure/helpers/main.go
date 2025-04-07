@@ -1,6 +1,8 @@
 package helpers
 
 import (
+	"crypto/rand"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"slices"
@@ -92,4 +94,12 @@ func ValidateClientGrant(grantTypes []string, requestedGrant string) error {
 		return fmt.Errorf("grant_type '%s' not allowed for this client", requestedGrant)
 	}
 	return nil
+}
+func GenerateAuthCode(length int) (string, error) {
+    bytes := make([]byte, length)
+    _, err := rand.Read(bytes)
+    if err != nil {
+        return "", err
+    }
+    return base64.URLEncoding.WithPadding(base64.NoPadding).EncodeToString(bytes), nil
 }

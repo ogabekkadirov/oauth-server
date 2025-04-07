@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: "Segoe UI", sans-serif;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #e0eafc, #cfdef3);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .login-container {
+        background: #fff;
+        padding: 2.5rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+      }
+      h2 {
+        margin-bottom: 1.5rem;
+        text-align: center;
+        color: #333;
+      }
+      label {
+        display: block;
+        margin-bottom: 0.3rem;
+        color: #555;
+        font-size: 0.95rem;
+      }
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        margin-bottom: 1.2rem;
+        font-size: 1rem;
+        transition: border 0.3s;
+      }
+      input:focus {
+        border-color: #6495ed;
+        outline: none;
+      }
+      button {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: #6495ed;
+        color: #fff;
+        font-size: 1rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #4169e1;
+      }
+      .error {
+        color: red;
+        margin-bottom: 1rem;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <h2>User Login</h2>
+
+      {{if .error}}
+      <div class="error">{{.error}}</div>
+      {{end}}
+
+      <form method="POST" action="/api/v1/login">
+        <!-- Hidden fields to preserve OAuth data -->
+        <input type="hidden" name="client_id" value="{{.client_id}}" />
+        <input type="hidden" name="redirect_uri" value="{{.redirect_uri}}" />
+        <input type="hidden" name="scope" value="{{.scope}}" />
+        <input type="hidden" name="state" value="{{.state}}" />
+
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </body>
+</html>
