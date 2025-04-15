@@ -89,7 +89,6 @@ func ExtractValue(str, prefix string) string {
 
 
 func ValidateClientGrant(grantTypes []string, requestedGrant string) error {
-	fmt.Println("grantTypes: %v, requestedGrant: %s", grantTypes, requestedGrant)
 	if !slices.Contains(grantTypes, requestedGrant) {
 		return fmt.Errorf("grant_type '%s' not allowed for this client", requestedGrant)
 	}
